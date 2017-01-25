@@ -1,0 +1,13 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "postgres": "postgres://postgres:@localhost:5432/authmanage",
+  "public": "../public/",
+  "auth": {
+    "idField": "id",
+    "token": {
+      "secret": "qvva4uxOEQfJqNfnfh5moQl7zosMMchwKiYXxLXfMDROZ+nzo8MdP9WuuUdo82wCNmeLrUcTI+9y5GuSaHTT0Q=="
+    },
+    "local": {}
+  }
+}
