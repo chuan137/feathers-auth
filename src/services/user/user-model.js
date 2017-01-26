@@ -17,6 +17,9 @@ module.exports = function(sequelize) {
     password: {
       type: Sequelize.STRING,
       allowNull: false
+    }, 
+    roles: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
     }
   }, {
     freezeTableName: true
