@@ -12,7 +12,8 @@ const feathers = require('feathers/client');
 const rest = require('feathers-rest/client');
 const hooks = require('feathers-hooks');
 const fetch = require('node-fetch');
-const url = 'http://localhost:3030';
+const port = '3040';
+const url = `http://localhost:${port}`;
 
 const restClient = feathers()
   .configure(hooks())
@@ -24,6 +25,7 @@ exports.expect = chai.expect;
 exports.restClient = restClient;
 exports.server = server;
 exports.url = url;
+exports.port = port;
 
 // const io = require('socket.io-client');
 // const socket = io('http://localhost:3030/');

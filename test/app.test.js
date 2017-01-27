@@ -11,7 +11,7 @@ const msgApiTest = require('./services/message/client.test');
 
 describe('Feathers application tests', function() {
   before(function(done) {
-    this.server = app.listen(3030);
+    this.server = app.listen(common.port);
     this.server.once('listening', () => done());
   });
 
@@ -21,7 +21,7 @@ describe('Feathers application tests', function() {
 
   describe('Server', function() {
     it('starts and shows the index page', function() {
-      return chai.request('http://localhost:3030')
+      return chai.request(common.url)
         .get('/')
         .then(res => {
           assert.ok(res.text.indexOf('<html>') !== -1);
@@ -36,7 +36,7 @@ describe('Feathers application tests', function() {
 
     it('shows a 404 HTML page', function(done) {
       request({
-        url: 'http://localhost:3030/path/to/nowhere',
+        url: `${common.url}/path/to/nowhere`,
         headers: {
           'Accept': 'text/html'
         }
@@ -49,7 +49,7 @@ describe('Feathers application tests', function() {
 
     it('shows a 404 JSON error without stack trace', function(done) {
       request({
-        url: 'http://localhost:3030/path/to/nowhere',
+        url: `${common.url}/path/to/nowhere`,
         json: true
       }, function(err, res, body) {
         assert.equal(res.statusCode, 404);
