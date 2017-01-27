@@ -12,12 +12,18 @@ module.exports = function(sequelize) {
     email: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
-    }, 
+      allowNull: false,
+      validate: {
+        len: [6, 999]
+      }
+    },
     roles: {
       type: Sequelize.ARRAY(Sequelize.STRING)
     }
