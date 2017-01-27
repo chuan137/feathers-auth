@@ -13,12 +13,12 @@ const defaultRole = (role) => {
   return (hook) => {
     checkContext(hook, 'before', ['create']);
     let roles = getByDot(hook, 'data.roles');
-    if ( roles === undefined || roles === [] ) {
+    if (roles === undefined || roles === []) {
       setByDot(hook, 'data.roles', [role]);
     }
     return Promise.resolve(hook);
   };
-}
+};
 
 exports.before = {
   find: [

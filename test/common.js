@@ -12,18 +12,18 @@ const feathers = require('feathers/client');
 const rest = require('feathers-rest/client');
 const hooks = require('feathers-hooks');
 const fetch = require('node-fetch');
+const url = 'http://localhost:3030';
 
 const restClient = feathers()
   .configure(hooks())
-  .configure(rest('http://localhost:3030').fetch(fetch));
+  .configure(rest(url).fetch(fetch));
 
 exports.chai = chai;
 exports.assert = chai.assert;
 exports.expect = chai.expect;
-exports.request = chai.request;
 exports.restClient = restClient;
 exports.server = server;
-
+exports.url = url;
 
 // const io = require('socket.io-client');
 // const socket = io('http://localhost:3030/');
