@@ -6,7 +6,9 @@ module.exports = function(app) {
       email: req.body.email,
       password: req.body.password
     })
-    .then(user => res.redirect('/login.html'))
+    .then(user => {
+      res.send(user);
+    })
     .catch(next);
   };
 };
