@@ -4,6 +4,7 @@ const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks-common');
 const auth = require('feathers-authentication');
 const local = require('feathers-authentication-local');
+const verifyHooks = require('feathers-authentication-management').hooks;
 const checkContext = require('feathers-hooks-common/lib/utils').checkContext;
 const getByDot = require('feathers-hooks-common/lib/utils').getByDot;
 const setByDot = require('feathers-hooks-common/lib/utils').setByDot;
@@ -26,7 +27,8 @@ exports.before = {
   ],
   create: [
     local.hooks.hashPassword({ passwordField: 'password' }),
-    defaultRole('user')
+    defaultRole('user'),
+    verifyHooks.addVerification()
   ]
 };
 

@@ -26,6 +26,24 @@ module.exports = function(sequelize) {
     },
     roles: {
       type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    isVerified: {
+      type: Sequelize.BOOLEAN
+    },
+    verifyToken: {
+      type: Sequelize.STRING
+    },
+    verifyExpires: {
+      type: Sequelize.DATE
+    },
+    verifyChanges: {
+      type: Sequelize.JSON
+    },
+    resetToken: {
+      type: Sequelize.STRING
+    },
+    resetExpires: {
+      type: Sequelize.DATE
     }
   }, {
     freezeTableName: true

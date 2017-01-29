@@ -1,4 +1,5 @@
 'use strict';
+const authManagement = require('./authManagement');
 const message = require('./message');
 const authentication = require('./authentication');
 const user = require('./user');
@@ -13,6 +14,7 @@ module.exports = function() {
   app.set('sequelize', sequelize);
 
   app.configure(authentication);
+  app.configure(authManagement);
   app.configure(user);
   app.configure(message);
 };
