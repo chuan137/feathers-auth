@@ -1,4 +1,5 @@
 'use strict';
+const email = require('./email');
 const authManagement = require('./authManagement');
 const message = require('./message');
 const authentication = require('./authentication');
@@ -17,4 +18,5 @@ module.exports = function() {
   app.configure(authManagement);
   app.configure(user);
   app.configure(message);
+  app.configure(email);
 };
