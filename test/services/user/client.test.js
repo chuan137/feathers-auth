@@ -1,7 +1,9 @@
 const common = require('../../common');
 const clientApp = common.restClient;
-const serverApp = common.server;
+const auth = common.authClient;
+// const serverApp = common.server;
 const assert = common.assert;
+const expect = common.expect;
 
 let id;
 let token;
@@ -23,14 +25,34 @@ module.exports = function() {
       let promise = UserApi.create(testUser)
         .then(user => {
           id = user.id;
+          token = user.verifyToken;
           return Promise.resolve(user);
         });
       return promise.should.be.fulfilled;
     });
 
-    it('email not verified', () => {
-      return clientApp.authenticate().should.be
-        .rejectedWith('User\'s email is not yet verified');
-    });
+    it.skip('email not verified', () =>
+      clientApp.authenticate({
+        strategy: 'local',
+        email: testUser.email,
+        password: testUser.password
+      })
+      .should.be.rejectedWith(
+        'User\'s email is not yet verified')
+    );
+
+    it('verified email', () =>
+      auth.verifySignupLong(token).should.be.fulfilled
+    );
+
+    it('authenticated', () =>
+      expect(
+        clientApp.authenticate({
+          strategy: 'local',
+          email: testUser.email,
+          password: testUser.password
+        })
+      ).to.eventually.have.property('accessToken')
+    );
   });
 };

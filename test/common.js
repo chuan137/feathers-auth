@@ -14,6 +14,7 @@ const hooks = require('feathers-hooks');
 const fetch = require('node-fetch');
 const authentication = require('feathers-authentication-client');
 const LocalStorage = require('node-localstorage').LocalStorage;
+const AuthManagement = require('feathers-authentication-management/lib/client');
 
 const port = '3040';
 const url = `http://localhost:${port}`;
@@ -24,10 +25,13 @@ const restClient = feathers()
   .configure(rest(url).fetch(fetch))
   .configure(authentication({storage: localStorage}));
 
+const authManagementClient = AuthManagement(restClient);
+
 exports.chai = chai;
 exports.assert = chai.assert;
 exports.expect = chai.expect;
 exports.restClient = restClient;
+exports.authClient = authManagementClient;
 exports.server = server;
 exports.url = url;
 exports.port = port;

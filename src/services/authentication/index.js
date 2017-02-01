@@ -17,8 +17,8 @@ module.exports = function () {
 	app.service('authentication').hooks({
 		before: {
 			create: [
-				authManagement.hooks.isVerified(),
-				auth.hooks.authenticate(['jwt', 'local'])
+				auth.hooks.authenticate(['jwt', 'local']),
+				authManagement.hooks.isVerified()
 			],
 			remove: [
 				auth.hooks.authenticate('jwt')
