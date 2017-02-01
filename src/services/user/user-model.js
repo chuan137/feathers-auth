@@ -24,6 +24,13 @@ module.exports = function(sequelize) {
         len: [6, 999]
       }
     },
+    username: {
+      type: Sequelize.STRING,
+      unique: true,
+      validate: {
+        isAlphanumeric: true
+      }
+    },
     roles: {
       type: Sequelize.ARRAY(Sequelize.STRING)
     },
