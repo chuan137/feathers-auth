@@ -12,12 +12,17 @@ const feathers = require('feathers/client');
 const rest = require('feathers-rest/client');
 const hooks = require('feathers-hooks');
 const fetch = require('node-fetch');
+const authentication = require('feathers-authentication-client');
+const LocalStorage = require('node-localstorage').LocalStorage;
+
 const port = '3040';
 const url = `http://localhost:${port}`;
+const localStorage = new LocalStorage('./data');
 
 const restClient = feathers()
   .configure(hooks())
-  .configure(rest(url).fetch(fetch));
+  .configure(rest(url).fetch(fetch))
+  .configure(authentication({storage: localStorage}));
 
 exports.chai = chai;
 exports.assert = chai.assert;
@@ -30,8 +35,4 @@ exports.port = port;
 // const io = require('socket.io-client');
 // const socket = io('http://localhost:3030/');
 // const socketio = require('feathers-socketio/client');
-// const authentication = require('feathers-authentication-client');
-// const LocalStorage = require('node-localstorage').LocalStorage;
-// const localStorage = new LocalStorage('./data');
-  // .configure(authentication({ storage: localStorage }));
 // .configure(socketio(socket)) // you could use Primus or REST instead

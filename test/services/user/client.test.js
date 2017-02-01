@@ -27,5 +27,10 @@ module.exports = function() {
         });
       return promise.should.be.fulfilled;
     });
+
+    it('email not verified', () => {
+      return clientApp.authenticate().should.be
+        .rejectedWith('User\'s email is not yet verified');
+    });
   });
 };

@@ -3,6 +3,7 @@
 const auth = require('feathers-authentication');
 const local = require('feathers-authentication-local');
 const jwt = require('feathers-authentication-jwt');
+const authManagement = require('feathers-authentication-management');
 
 module.exports = function () {
 	const app = this;
@@ -15,7 +16,8 @@ module.exports = function () {
 
 	app.service('authentication').hooks({
 		before: {
-			create: [       // You can chain multiple strategies
+			create: [
+				authManagement.hooks.isVerified(),
 				auth.hooks.authenticate(['jwt', 'local'])
 			],
 			remove: [
