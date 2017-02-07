@@ -23,8 +23,8 @@ exports.after = {
   find: [],
   get: [],
   create: [ 
-    globalHooks.sendVE(),
-    verifyHooks.removeVerification() // when and what to remove
+    verifyHooks.removeVerification(), // when and what to remove
+    globalHooks.sendVerification()
   ],
   update: [],
   patch: [],
