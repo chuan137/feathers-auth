@@ -30,26 +30,10 @@ Users.create({
     password: adminPass,
     roles: ['admin']
   })
-  .then(() =>
-    app.authenticate({
-      strategy: 'local',
-      email: adminMail,
-      password: adminPass
-    })
-  )
-  .then(() =>  
-    Users.find({
-      query: {
-        email: adminMail
-      }
-    })
-  )
-  .then((users) => {
-    if (users.total == 0) {
-      return Promise.reject('No user found')
-    }
-    let token = users.data[0].verifyToken;
+  .then((user) => {
+    let id = user.id;
+    let token = user.verifyToken;
     return authManagement.verifySignupLong(token);
   })
   .then(res => console.log(res))
-  .catch(err => console.log(err.message));
+  .catch(err => console.log(err.message, err.errors));
