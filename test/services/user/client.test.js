@@ -26,7 +26,7 @@ module.exports = function() {
         .then(user => {
           id = user.id;
           token = user.verifyToken;
-          return Promise.resolve(user);
+          return user;
         });
       return promise.should.be.fulfilled;
     });

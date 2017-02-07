@@ -17,39 +17,37 @@ module.exports = function(app) {
   function sendEmail(email) {
     return app.service('emails')
       .create(email)
-      .then(function(result) {
-        console.log('Sent email', result);
-      }).catch(err => {
-        console.log('Error sending email', err);
+      .then(result => {
+        debug('Sent email', result);
+        return result;
       });
   }
 
-  return {
-    notifier: function(type, user, notifierOptions) {
-      debug(`-- Preparing email for ${type}`);
-      let hashLink;
-      let email;
-      let emailAccountTemplatesPath = path.join(app.get('src'), 'email-templates', 'account');
-      let templatePath;
-      let compiledHTML;
-      switch (type) {
-        case 'resendVerifySignup':
-        case 'verifySignup': 
-          hashLink = getLink('verify', user.verifyToken);
-          templatePath = path.join(emailAccountTemplatesPath, 'verify-email.jade');
-          compiledHTML = jade.compileFile(templatePath)({
-            logo: '',
-            name: user.name || user.email,
-            hashLink,
-            returnEmail
-          });
-          email = {
-            from: process.env.GMAIL,
-            to: user.email,
-            subject: 'Confirm Signup',
-            html: compiledHTML
-          };
-          return sendEmail(email);
+  return function(type, user, notifierOptions) {
+    debug(`-- Preparing email for ${type}`);
+    let hashLink;
+    let email;
+    let emailAccountTemplatesPath = path.join(app.get('src'), 'email-templates', 'account');
+    let templatePath;
+    let compiledHTML;
+    switch (type) {
+      case 'sendVerifySignup':
+      case 'resendVerifySignup':
+        hashLink = getLink('verify', user.verifyToken);
+        templatePath = path.join(emailAccountTemplatesPath, 'verify-email.jade');
+        compiledHTML = jade.compileFile(templatePath)({
+          logo: '',
+          name: user.name || user.email,
+          hashLink,
+          returnEmail
+        });
+        email = {
+          from: process.env.GMAIL,
+          to: user.email,
+          subject: 'Confirm Signup',
+          html: compiledHTML
+        };
+        return sendEmail(email);
         // case 'sendResetPwd': // inform that user's email is now confirmed
         //   hashLink = getLink('reset', user.resetToken)
         //   templatePath = path.join(emailAccountTemplatesPath, 'reset-password.jade')
@@ -117,9 +115,9 @@ module.exports = function(app) {
         //   }
         //   return sendEmail(email)
         //   break
-        default:
-          break;
-      }
+      default:
+        debug('-- Nothing sent');
+        break;
     }
   };
 };

@@ -24,7 +24,7 @@ exports.after = {
   get: [],
   create: [ 
     verifyHooks.removeVerification(), // when and what to remove
-    globalHooks.sendVerification()
+    globalHooks.sendVerifySignup()
   ],
   update: [],
   patch: [],

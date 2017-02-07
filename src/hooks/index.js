@@ -12,25 +12,6 @@ exports.myHook = function(options) {
   };
 };
 
-exports.sendVE = function(options) {
-  return function(hook) {
-    const app = hook.app;
-    const emailService = app.service('emails');
-    const authManagementService = app.service('authManagement');
+const sendVerifySignup = require('./sendVerifySignup');
 
-    // authManagementService.create({
-    //   action: 'checkUnique',
-    //   value: {
-    //     email: 'chuan137@gmail.com'
-    //   }, // e.g. {email, username}. Props with null or undefined are ignored.
-    //   ownId: 'abc',
-    //   meta: {
-    //     error: 'nothing here'
-    //   }, // if return an error.message if not unique
-    // }).then(res => console.log(res));
-
-    console.log('send verification email');
-
-    return hook;
-  };
-};
+exports.sendVerifySignup = sendVerifySignup;
